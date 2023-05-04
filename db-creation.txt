@@ -1,0 +1,13 @@
+CREATE DATABASE pcic_db;
+
+drop table if exists queuing_tbl;
+
+CREATE TABLE queuing_tbl;(
+    queue_id SERIAL PRIMARY KEY,
+    window_num VARCHAR(255),
+    trans_type VARCHAR(255),
+    queue_num bigint,
+    date_queue DATE,
+    status varchar(255),
+    gender varchar(255)
+);
