@@ -4,6 +4,7 @@ module.exports = function queuingGen({ pool }) {
     countQueuNum,
     listPendingQueue,
     updateCurrentNum,
+    listQueueDashboard,
   });
 
   async function newQueuingNum(winTransData, newQueuNum) {
@@ -11,7 +12,13 @@ module.exports = function queuingGen({ pool }) {
 
     return await pool
       .query(
-        `INSERT INTO queuing_tbl(window_num,trans_type,queue_num,date_queue,status,gender) VALUES ($1 , $2 , $3 , $4, $5, $6)
+        `INSERT INTO queuing_tbl
+        (window_num,
+          trans_type,
+          queue_num,
+          date_queue,
+          status,
+          gender) VALUES ($1 , $2 , $3 , $4, $5, $6)
     RETURNING *`,
         [winNum, transType, newQueuNum, date_queue, "PENDING", gender]
       )
@@ -68,10 +75,34 @@ module.exports = function queuingGen({ pool }) {
         * 
         from queuing_tbl
         where window_num = $1 and date_queue = CURRENT_DATE
-        and status = 'PENDING'
         order by queue_num asc;`,
         [winNum]
       );
+      return result.rows;
+    } catch (error) {
+      console.log("err:", error);
+    }
+  }
+
+  async function listQueueDashboard() {
+    try {
+      let sql = `select  
+        * 
+        from queuing_tbl
+        where date_queue = CURRENT_DATE
+        order by queue_num asc;`;
+
+      const result = await new Promise((resolve) => {
+        client.connect(function(err) {
+          if (err) {
+            return console.error("Connect error", err);
+          }
+          client.exec(sql, function(err, rows) {
+            resolve(rows);
+            client.end();
+          });
+        });
+      });
       return result.rows;
     } catch (error) {
       console.log("err:", error);

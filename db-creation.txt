@@ -3,11 +3,38 @@ CREATE DATABASE pcic_db;
 drop table if exists queuing_tbl;
 
 CREATE TABLE queuing_tbl;(
-    queue_id SERIAL PRIMARY KEY,
+    queue_id BIGINT NOT NULL PRIMARY KEY --SERIAL PRIMARY KEY,
     window_num VARCHAR(255),
     trans_type VARCHAR(255),
     queue_num bigint,
     date_queue DATE,
     status varchar(255),
-    gender varchar(255)
+    gender varchar(255),
+    user_role varchar(255)
+);
+drop table if exists user_info_tbl;
+
+CREATE TABLE user_info_tbl(
+    user_id BIGINT NOT NULL PRIMARY KEY,
+    firstName varchar(255),
+    middleName varchar(255),
+    lastName varchar(255),
+    userName varchar(255),
+    user_password varchar(255)
+)
+;
+
+drop table if exists transactions_tbl;
+create type payment as ENUM('CASH','CHECK');
+CREATE TABLE transactions_tbl(
+    transaction_id BIGINT NOT NULL PRIMARY KEY,
+    transaction_code varchar(255),
+    payor varchar(255),
+    product varchar(255),
+    amount varchar(255),
+    payment_type payment,
+    check_no varchar(255),
+    transaction_date DATE,
+    user_id BIGINT REFERENCES user_info_tbl(user_id) 
+    --FOREIGN KEY REFERENCES user_info_tbl(user_id)
 );
