@@ -1,5 +1,5 @@
 const Pool = require("pg").Pool;
-const transAction = require("./transactionsActions");
+const userActions = require("./userActions");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -11,7 +11,6 @@ const pool = new Pool({
   port: process.env.PGPORT,
 });
 
-const transDataAccess = transAction({ pool });
+const userActionsDataAccess = userActions({ pool });
 
-// module.exports = { empDataAccess, transDataAccess };
-module.exports = transDataAccess;
+module.exports = userActionsDataAccess;
