@@ -18,6 +18,7 @@ const updateUser = require("./users/updateUserUC");
 //transaction
 const draftTrans = require("./transactions/draftTransactionUC");
 const processTrans = require("./transactions/processTransactionUC");
+const listTrans = require("./transactions/listAllTransactionUC");
 
 //queuing
 const queingGenUC = queuingGen({ queuingDataAccess });
@@ -39,6 +40,7 @@ const draftTransactionUC = draftTrans({
   checkTransactionEntry,
 });
 const processTransUC = processTrans({ transActionDataAccess });
+const listTransUC = listTrans({ transActionDataAccess });
 
 module.exports = {
   queingGenUC,
@@ -50,4 +52,5 @@ module.exports = {
   updateUserUC,
   draftTransactionUC,
   processTransUC,
+  listTransUC,
 };

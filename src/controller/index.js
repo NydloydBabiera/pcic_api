@@ -8,6 +8,7 @@ const {
   updateUserUC,
   draftTransactionUC,
   processTransUC,
+  listTransUC,
 } = require("../use-cases");
 
 //queuing
@@ -24,6 +25,7 @@ const updateUserController = require("./users/updateUserController");
 //transaction
 const drafTransctionController = require("./transaction/draftTransController");
 const processTransController = require("./transaction/processTransController");
+const listTransController = require("./transaction/listTransController");
 
 //queuing
 const queuingGenControl = queuingController({ queingGenUC });
@@ -41,6 +43,7 @@ const updateUserControl = updateUserController({ updateUserUC });
 //transactions
 const draftTransControl = drafTransctionController({ draftTransactionUC });
 const processTransControl = processTransController({ processTransUC });
+const listTransControl = listTransController({ listTransUC });
 
 module.exports = {
   queuingGenControl,
@@ -52,4 +55,5 @@ module.exports = {
   updateUserControl,
   draftTransControl,
   processTransControl,
+  listTransControl,
 };

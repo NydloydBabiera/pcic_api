@@ -1,10 +1,10 @@
-module.exports = function draftTransaction({ draftTransactionUC }) {
-  return async function post(httpRequest) {
+module.exports = function listTransaction({ listTransUC }) {
+  return async function get(httpRequest) {
     try {
       const transData = httpRequest.body;
 
       // Usecase
-      const result = await draftTransactionUC(transData);
+      const result = await listTransUC();
       if (result) {
         return {
           headers: {
