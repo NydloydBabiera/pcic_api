@@ -39,6 +39,7 @@ CREATE TABLE transactions_tbl(
     amount_total varchar(255),
     payment_type payment,
     check_no varchar(255),
+    check_date DATE,
     transaction_date DATE,
     user_id BIGINT REFERENCES user_info_tbl(user_id) 
     --FOREIGN KEY REFERENCES user_info_tbl(user_id)
@@ -61,5 +62,6 @@ CREATE TABLE transactions_line_tbl(
     transaction_line_tbl SERIAL NOT NULL PRIMARY KEY,
     transaction_id BIGINT REFERENCES transactions_tbl(transaction_id),
     product_id BIGINT REFERENCES product_tbl(product_id),
-    quantity bigint
+    quantity bigint,
+    amount float
 )

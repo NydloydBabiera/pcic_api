@@ -40,6 +40,7 @@ module.exports = function transactionAction({ pool }) {
       check_no,
       transaction_date,
       user_id,
+      check_date,
     } = transData;
 
     let param = [
@@ -52,11 +53,12 @@ module.exports = function transactionAction({ pool }) {
       check_no,
       transaction_date,
       user_id,
+      check_date,
     ];
 
     let sql = `INSERT INTO transactions_tbl(
-        transaction_code, transaction_status, payor, product, amount_total, payment_type, check_no, transaction_date, user_id)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`;
+        transaction_code, transaction_status, payor, product, amount_total, payment_type, check_no, transaction_date, user_id, check_date)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`;
 
     return await pool
       .query(sql, param)
@@ -69,10 +71,10 @@ module.exports = function transactionAction({ pool }) {
   }
 
   async function saveTransactionLine(trans_line) {
-    const { transaction_id, product_id, quantity } = trans_line;
-    let param = [transaction_id, product_id, quantity];
-    let sql = `INSERT INTO transactions_line_tbl( transaction_id, product_id, quantity)
-      VALUES ($1, $2, $3) RETURNING *`;
+    const { transaction_id, product_id, quantity, amount } = trans_line;
+    let param = [transaction_id, product_id, quantity, amount];
+    let sql = `INSERT INTO transactions_line_tbl( transaction_id, product_id, quantity, amount)
+      VALUES ($1, $2, $3, $4) RETURNING *`;
 
     return await pool
       .query(sql, param)

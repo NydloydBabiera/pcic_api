@@ -4,7 +4,7 @@ module.exports = function drafTransactionUC({
 }) {
   return async function draftTransaction(transData) {
     //check entries in entity
-    await checkTransactionEntry(transData.trans_header);
+    await checkTransactionEntry(transData);
     //generate transaction_code for draft, and transaction_status
     const DRtransCode = await transActionDataAccess.getDRtransCode();
     transData.trans_header.transaction_code =

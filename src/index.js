@@ -19,16 +19,18 @@ var generateQueueNum = require("./routes/queuing");
 var userRoute = require("./routes/users");
 var transRoute = require("./routes/transaction");
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(express.json());
 app.use("/queuing", generateQueueNum);
 app.use("/user", userRoute);
 app.use("/transaction", transRoute);
-// app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.listen(process.env.PORT, () => {
   console.log(`server is listening on port ${process.env.PORT}`);
 });
 
-// const { dashboardUC } = require("./use-cases/queuing/dasboardSocket");
-// dashboardUC();
+const { dashboardUC } = require("./socket/index");
+dashboardUC();

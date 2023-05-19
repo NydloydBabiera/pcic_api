@@ -5,8 +5,7 @@ module.exports = function dashboardUC({ queuingDataAccess, io }) {
         const dataType = [];
         console.log("connected to socket");
         const result = await queuingDataAccess.listQueueDashboard();
-        dataType.push({ 0: "list of queu" }, { result });
-        io.emit("dashboard", dataType);
+        io.emit("dashboard", result);
       });
     } catch (error) {
       console.log("ERROR:", err);

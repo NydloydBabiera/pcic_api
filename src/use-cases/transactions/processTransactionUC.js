@@ -4,7 +4,6 @@ module.exports = function processTransUC({ transActionDataAccess }) {
     const transStatus = await transActionDataAccess.getSpecificTransaction(
       transData.trans_id
     );
-    console.log("transStatus:", transStatus.transaction_status);
     if (transStatus.transaction_status == "PR") {
       throw new Error("Transaction already processed!");
     }

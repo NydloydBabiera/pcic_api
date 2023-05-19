@@ -4,7 +4,7 @@
   "description": "API for queuing system",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest src/socket.test.js",
     "dev": "nodemon src/index.js"
   },
   "author": "Nydloyd",
@@ -13,5 +13,8 @@
     "dotenv": "^16.0.3",
     "nodemon": "^2.0.22",
     "socket.io": "^4.6.1"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0"
   }
 }

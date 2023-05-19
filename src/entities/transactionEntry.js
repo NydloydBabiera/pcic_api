@@ -8,13 +8,10 @@ module.exports = function transactionEntry() {
       check_no,
       transaction_date,
       user_id,
-    } = transData;
+    } = transData.trans_header;
 
     if (!payor) {
       throw new Error("Payor is empty");
-    }
-    if (!product) {
-      throw new Error("product required");
     }
     if (amount == 0 || amount < 0) {
       throw new Error("Amount must be greater than zero (0)");
@@ -22,7 +19,6 @@ module.exports = function transactionEntry() {
     if (!amount) {
       throw new Error("Amount is empty");
     }
-
     if (!payment_type) {
       throw new Error("No payment type selected");
     }
@@ -40,7 +36,8 @@ module.exports = function transactionEntry() {
     //   chkSpecialChar(lastName)
     // ) {
     //   throw new Error(
-    //     "Special characters are not allowed on names (e.g .,!,<>,(),@)"
+    //     "Special characters are not allowed on names (e.g .,!,<>,(),@)"sige2 maam
+
     //   );
     // }
 
