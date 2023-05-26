@@ -45,6 +45,10 @@ CREATE TABLE transactions_tbl(
     --FOREIGN KEY REFERENCES user_info_tbl(user_id)
 );
 
+
+alter table product_tbl
+add column bank_code varchar(255);.
+
 CREATE TABLE product_tbl(
     product_id SERIAL NOT NULL PRIMARY KEY,
     prod_name varchar(255),
