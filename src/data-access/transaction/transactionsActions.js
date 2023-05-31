@@ -147,8 +147,6 @@ module.exports = function transactionAction({ pool }) {
     } = transData;
 
     let param = [
-      transaction_code,
-      transaction_status,
       payor,
       product,
       amount,
@@ -162,7 +160,7 @@ module.exports = function transactionAction({ pool }) {
     ];
 
     let sql = `UPDATE transactions_tbl
-    SET transaction_code=$1, transaction_status=$2, payor=$3, product=$4, amount_total=$5, 
+    SET payor=$3, product=$4, amount_total=$5, 
     payment_type=$6, check_no=$7, transaction_date=$8, user_id=$9, check_date=$10, bank_code=$11
     WHERE transaction_id= $12 RETURNING *`;
 
@@ -193,5 +191,9 @@ module.exports = function transactionAction({ pool }) {
       .catch((err) => {
         console.log("ERROR:", err);
       });
+  }
+
+  async function countLine(){
+    
   }
 };
