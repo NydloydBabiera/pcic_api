@@ -7,6 +7,8 @@ module.exports = function transactionAction({ pool }) {
     getSpecificTransaction,
     saveTransactionLine,
     getAllLineTransaction,
+    updateHeaderTransaction,
+    updateTransactionLine,
   });
 
   async function getDRtransCode() {
@@ -41,6 +43,7 @@ module.exports = function transactionAction({ pool }) {
       transaction_date,
       user_id,
       check_date,
+      bank_code,
     } = transData;
 
     let param = [
@@ -54,11 +57,12 @@ module.exports = function transactionAction({ pool }) {
       transaction_date,
       user_id,
       check_date,
+      bank_code,
     ];
 
     let sql = `INSERT INTO transactions_tbl(
-        transaction_code, transaction_status, payor, product, amount_total, payment_type, check_no, transaction_date, user_id, check_date)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`;
+        transaction_code, transaction_status, payor, product, amount_total, payment_type, check_no, transaction_date, user_id, check_date, bank_code)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *`;
 
     return await pool
       .query(sql, param)
@@ -103,7 +107,7 @@ module.exports = function transactionAction({ pool }) {
   }
 
   async function getAllHeaderTransaction() {
-    let sql = `select * from transactions_tbl`;
+    let sql = `select * from transactions_tbl order by transaction_id desc`;
 
     try {
       let result = await pool.query(sql);
@@ -123,5 +127,73 @@ module.exports = function transactionAction({ pool }) {
     } catch (error) {
       console.log("ERROR:", error);
     }
+  }
+
+  async function updateHeaderTransaction(transData) {
+    console.log("Update header");
+    const {
+      transaction_code,
+      transaction_status,
+      payor,
+      product,
+      amount,
+      payment_type,
+      check_no,
+      transaction_date,
+      user_id,
+      check_date,
+      bank_code,
+      transaction_id,
+    } = transData;
+
+    let param = [
+      payor,
+      product,
+      amount,
+      payment_type,
+      check_no,
+      transaction_date,
+      user_id,
+      check_date,
+      bank_code,
+      transaction_id,
+    ];
+
+    let sql = `UPDATE transactions_tbl
+    SET payor=$3, product=$4, amount_total=$5, 
+    payment_type=$6, check_no=$7, transaction_date=$8, user_id=$9, check_date=$10, bank_code=$11
+    WHERE transaction_id= $12 RETURNING *`;
+
+    return await pool
+      .query(sql, param)
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        console.log("ERROR:", err);
+      });
+  }
+
+  async function updateTransactionLine(trans_line) {
+    const { transaction_id, product_id, quantity, amount } = trans_line;
+
+    let param = [transaction_id, product_id, quantity, amount];
+
+    let sql = `UPDATE public.transactions_line_tbl
+    SET product_id=$2, quantity=$3, amount=$4
+    WHERE transaction_id= $1 RETURNING *`;
+
+    return await pool
+      .query(sql, param)
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        console.log("ERROR:", err);
+      });
+  }
+
+  async function countLine(){
+    
   }
 };

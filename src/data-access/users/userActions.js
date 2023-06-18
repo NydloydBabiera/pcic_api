@@ -10,7 +10,6 @@ module.exports = function userActions({ pool }) {
   });
 
   async function addNewUser(userData) {
-    console.log("userData:", userData);
     const {
       firstName,
       middleName,

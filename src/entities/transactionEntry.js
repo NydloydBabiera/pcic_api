@@ -8,6 +8,7 @@ module.exports = function transactionEntry() {
       check_no,
       transaction_date,
       user_id,
+      bank_code,
     } = transData.trans_header;
 
     if (!payor) {
@@ -25,6 +26,9 @@ module.exports = function transactionEntry() {
     if (payment_type === "CHECK") {
       if (!check_no) {
         throw new Error("Check number is empty");
+      }
+      if (!bank_code) {
+        throw new Error("Select bank code");
       }
     }
     if (!user_id) {
