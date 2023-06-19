@@ -2,6 +2,7 @@ const queuingDataAccess = require("../data-access/queuing");
 const userActionsDataAccess = require("../data-access/users");
 const transActionDataAccess = require("../data-access/transaction");
 const productDataAccess = require("../data-access/products");
+const reportsDataAccess = require("../data-access/reports")
 
 const { checkUserEntry, checkTransactionEntry } = require("../entities");
 
@@ -26,6 +27,9 @@ const updateTransaction = require("./transactions/updateTransactionUC");
 const addNewProduct = require("./products/addProductUC");
 const getAllProduct = require("./products/getAllProductUC");
 
+//reports 
+const reportTransaction = require("./reports/transactionReportsUC")
+const reportQueuing = require("./reports/queuingReportsUC")
 //queuing
 const queingGenUC = queuingGen({ queuingDataAccess });
 const listQueueUC = listQueue({ queuingDataAccess });
@@ -55,6 +59,11 @@ const updateTransactionUC = updateTransaction({
 //product
 const addProductUC = addNewProduct({ productDataAccess });
 const getAllProductUC = getAllProduct({ productDataAccess });
+
+//report
+const transReportUC = reportTransaction({reportsDataAccess});
+const queuReportUC = reportQueuing({reportsDataAccess});
+
 module.exports = {
   queingGenUC,
   listQueueUC,
@@ -69,4 +78,6 @@ module.exports = {
   updateTransactionUC,
   addProductUC,
   getAllProductUC,
+  transReportUC,
+  queuReportUC
 };

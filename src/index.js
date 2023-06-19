@@ -19,6 +19,7 @@ var generateQueueNum = require("./routes/queuing");
 var userRoute = require("./routes/users");
 var transRoute = require("./routes/transaction");
 var productRoute = require("./routes/product");
+var reportRoute = require("./routes/reports")
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -28,6 +29,7 @@ app.use("/queuing", generateQueueNum);
 app.use("/user", userRoute);
 app.use("/transaction", transRoute);
 app.use("/product", productRoute);
+app.use("/reports", reportRoute);
 app.use(express.static(path.join(__dirname, "public")));
 
 app.listen(process.env.PORT, () => {

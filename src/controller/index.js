@@ -12,6 +12,8 @@ const {
   updateTransactionUC,
   addProductUC,
   getAllProductUC,
+  transReportUC,
+  queuReportUC
 } = require("../use-cases");
 
 //queuing
@@ -34,6 +36,10 @@ const updateTransactionController = require("./transaction/updateTransController
 //product
 const addProductController = require("./product/addProductController");
 const getAllProductController = require("./product/getAllProductController");
+
+//report
+const reportTransController = require("./reports/reportTransController")
+const reportQueuController = require("./reports/queuController")
 
 //queuing
 const queuingGenControl = queuingController({ queingGenUC });
@@ -58,6 +64,10 @@ const updateControl = updateTransactionController({ updateTransactionUC });
 const addProductControl = addProductController({ addProductUC });
 const getallProductControl = getAllProductController({ getAllProductUC });
 
+//report
+const reportTransControl = reportTransController({transReportUC});
+const reportQueuControl = reportQueuController({queuReportUC});
+
 module.exports = {
   queuingGenControl,
   listQueueControl,
@@ -72,4 +82,6 @@ module.exports = {
   updateControl,
   addProductControl,
   getallProductControl,
+  reportTransControl,
+  reportQueuControl
 };
