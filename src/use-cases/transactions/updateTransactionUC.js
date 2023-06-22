@@ -15,17 +15,17 @@ module.exports = function updateransactionUC({
 
     //delete transaction_line
 
-    await transactionsActions.deleteTransLine
+    await transActionDataAccess.deleteTransLine(transData.trans_header.transaction_id);
 
     //update transaction line
-    console.log("line length:", transData.trans_line.length);
     let transLineData = [];
     for await (transLine of transData.trans_line) {
       const dataVal = {};
       transLine.transaction_id = trans_header.rows[0].transaction_id;
-      const trans_line = await transActionDataAccess.updateTransactionLine(
+      const trans_line = await transActionDataAccess.saveTransactionLine(
         transLine
       );
+      
       dataVal.transaction_line_tbl = trans_line.rows[0].transaction_line_tbl;
       dataVal.transaction_id = trans_line.rows[0].transaction_id;
       dataVal.product_id = trans_line.rows[0].product_id;

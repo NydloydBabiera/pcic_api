@@ -132,10 +132,7 @@ module.exports = function transactionAction({ pool }) {
   }
 
   async function updateHeaderTransaction(transData) {
-    console.log("Update header");
     const {
-      transaction_code,
-      transaction_status,
       payor,
       product,
       amount,
@@ -162,9 +159,9 @@ module.exports = function transactionAction({ pool }) {
     ];
 
     let sql = `UPDATE transactions_tbl
-    SET payor=$3, product=$4, amount_total=$5, 
-    payment_type=$6, check_no=$7, transaction_date=$8, user_id=$9, check_date=$10, bank_code=$11
-    WHERE transaction_id= $12 RETURNING *`;
+    SET payor=$1, product=$2, amount_total=$3, 
+    payment_type=$4, check_no=$5, transaction_date=$6, user_id=$7, check_date=$8, bank_code=$9
+    WHERE transaction_id= $10 RETURNING *`;
 
     return await pool
       .query(sql, param)
@@ -197,7 +194,7 @@ module.exports = function transactionAction({ pool }) {
 
     let param = [transaction_id, product_id, quantity, amount];
 
-    let sql = `UPDATE public.transactions_line_tbl
+    let sql = `UPDATE transactions_line_tbl
     SET product_id=$2, quantity=$3, amount=$4
     WHERE transaction_id= $1 RETURNING *`;
 
