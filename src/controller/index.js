@@ -13,7 +13,8 @@ const {
   addProductUC,
   getAllProductUC,
   transReportUC,
-  queuReportUC
+  queuReportUC,
+  overrideTransactionUC
 } = require("../use-cases");
 
 //queuing
@@ -32,6 +33,7 @@ const drafTransctionController = require("./transaction/draftTransController");
 const processTransController = require("./transaction/processTransController");
 const listTransController = require("./transaction/listTransController");
 const updateTransactionController = require("./transaction/updateTransController");
+const overrideTransactionController = require("./transaction/overrideTransController")
 
 //product
 const addProductController = require("./product/addProductController");
@@ -59,6 +61,7 @@ const draftTransControl = drafTransctionController({ draftTransactionUC });
 const processTransControl = processTransController({ processTransUC });
 const listTransControl = listTransController({ listTransUC });
 const updateControl = updateTransactionController({ updateTransactionUC });
+const overrideTransControl = overrideTransactionController({overrideTransactionUC})
 
 //products
 const addProductControl = addProductController({ addProductUC });
@@ -83,5 +86,6 @@ module.exports = {
   addProductControl,
   getallProductControl,
   reportTransControl,
-  reportQueuControl
+  reportQueuControl,
+  overrideTransControl
 };

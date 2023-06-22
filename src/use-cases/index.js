@@ -22,14 +22,18 @@ const draftTrans = require("./transactions/draftTransactionUC");
 const processTrans = require("./transactions/processTransactionUC");
 const listTrans = require("./transactions/listAllTransactionUC");
 const updateTransaction = require("./transactions/updateTransactionUC");
+const overrideTransaction = require("./transactions/overrideTransactionUC")
 
 //product
 const addNewProduct = require("./products/addProductUC");
 const getAllProduct = require("./products/getAllProductUC");
 
 //reports 
-const reportTransaction = require("./reports/transactionReportsUC")
-const reportQueuing = require("./reports/queuingReportsUC")
+const reportTransaction = require("./reports/transactionReportsUC");
+const reportQueuing = require("./reports/queuingReportsUC");
+
+
+
 //queuing
 const queingGenUC = queuingGen({ queuingDataAccess });
 const listQueueUC = listQueue({ queuingDataAccess });
@@ -55,6 +59,11 @@ const updateTransactionUC = updateTransaction({
   transActionDataAccess,
   checkTransactionEntry,
 });
+const overrideTransactionUC = overrideTransaction({
+  transActionDataAccess,
+  checkTransactionEntry,
+});
+
 
 //product
 const addProductUC = addNewProduct({ productDataAccess });
@@ -79,5 +88,6 @@ module.exports = {
   addProductUC,
   getAllProductUC,
   transReportUC,
-  queuReportUC
+  queuReportUC,
+  overrideTransactionUC
 };

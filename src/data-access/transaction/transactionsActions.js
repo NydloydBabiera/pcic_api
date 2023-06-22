@@ -9,6 +9,8 @@ module.exports = function transactionAction({ pool }) {
     getAllLineTransaction,
     updateHeaderTransaction,
     updateTransactionLine,
+    ovrHeaderTransaction,
+    deleteTransLine
   });
 
   async function getDRtransCode() {
@@ -169,6 +171,22 @@ module.exports = function transactionAction({ pool }) {
       .then((res) => {
         return res;
       })
+      .catch((err) => { 
+        console.log("ERROR:", err);
+      });
+  }
+
+  async function deleteTransLine(transaction_id){
+    let param = [transaction_id];
+
+    let sql = `delete from transactions_line_tbl
+    where transaction_id = $1`;
+
+    return await pool
+      .query(sql, param)
+      .then((res) => {
+        return res;
+      })
       .catch((err) => {
         console.log("ERROR:", err);
       });
@@ -192,8 +210,34 @@ module.exports = function transactionAction({ pool }) {
         console.log("ERROR:", err);
       });
   }
+ 
+  async function ovrHeaderTransaction(transData) {
 
-  async function countLine(){
-    
+    const {
+      transaction_code,
+      transaction_status,
+      transaction_id,
+    } = transData;
+
+
+    let param = [
+      transaction_code,
+      transaction_status,
+      transaction_id,
+    ];
+
+    let sql = `UPDATE transactions_tbl
+    SET  transaction_code = $1, transaction_status = $2
+    WHERE transaction_id = $3 RETURNING *`;
+
+    return await pool
+      .query(sql, param)
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => { 
+        console.log("ERROR:", err);
+      });
   }
+
 };
